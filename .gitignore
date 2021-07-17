@@ -1,0 +1,11 @@
+# MacOS
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# App environment vars, see .env.example and README for more info
+.env
+
+# Logs
+*.log
