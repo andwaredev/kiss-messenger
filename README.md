@@ -4,6 +4,8 @@ Keep It Simple, Stupid Messenger
 
 ## Getting Started
 
+**TODO: Node.js installation instructions**
+
 First things first, we'll get started by installing all necessary dependencies.
 
 You can do this running the following command from the root directory of this project:
@@ -63,6 +65,34 @@ yarn lint:eslint
 yarn lint:prettier
 ```
 
+### Testing
+
+#### Unit Tests
+
+The source code has been unit tested using [mocha](https://mochajs.org/) and [chai](https://www.chaijs.com/).
+
+You can run the unit tests with:
+
+```bash
+yarn test
+```
+
+You can run the test suite in "watch" mode with:
+
+```bash
+yarn test:watch
+```
+
+#### Coverage Reports
+
+Code coverage reporting is configured using [nyc](https://www.npmjs.com/package/nyc) from [Instanbul](https://istanbul.js.org/).
+
+You can generate and view a coverage report with:
+
+```bash
+yarn test:coverage
+```
+
 ### Environment Variables
 
 You'll find an `.env.example` file in the root directory, containing a template for setting app environment variables.
@@ -87,3 +117,4 @@ This project was built using [Node.js](https://nodejs.org/en/) and [Typescript](
   - Express middleware:
     - [CORS](https://www.npmjs.com/package/cors)
 - [dotenv](https://www.npmjs.com/package/dotenv)
+- Much more...
