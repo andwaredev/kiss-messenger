@@ -1,0 +1,139 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "KISS Messenger API Swagger",
+    "description": "This is a small project demonstrating a limited feature set for an API that would serve a simple messenger app. This project was built as a take home project during the interview process at Guild Education.",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Messages",
+      "description": "Everything related to messages"
+    }
+  ],
+  "paths": {
+    "/messages": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Retrieve all messages for the requested recipien",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of messages sent to the given reicipient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "required": ["id", "metadata", "text", "recepientId", "senderId"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MessageMetadata"
+          },
+          "text": {
+            "type": "string",
+            "example": "Hello, World!"
+          },
+          "recepientId": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "senderId": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          }
+        }
+      },
+      "MessageMetadata": {
+        "type": "object",
+        "required": ["dateSent"],
+        "properties": {
+          "dateSent": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-07-17T23:20:50.52Z"
+          }
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "example": 501
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "userId": {
+        "name": "X-User-Id",
+        "in": "header",
+        "description": "The User ID for the recipient of the requested message set.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
