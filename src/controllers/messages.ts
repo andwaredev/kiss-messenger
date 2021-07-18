@@ -26,14 +26,14 @@ export default class MessagesController {
     }
 
     if (typeof recipient === 'number') {
-      where.recipient = recipient;
+      where.recipientId = recipient;
     }
 
     const join: FindManyOptions<Message>['join'] = {
       alias: 'message',
     };
     if (typeof sender === 'number') {
-      where.sender = sender;
+      where.senderId = sender;
     } else {
       join.leftJoinAndSelect = {
         sender: 'message.sender',
@@ -50,6 +50,12 @@ export default class MessagesController {
       queryOpts.take = limit;
     }
 
+    queryOpts.select = ['id', 'text', 'dateSent'];
+
     return this.repository.find(queryOpts);
+  }
+
+  public async createMessage(senderId: number, recipientId: number, text: string): Promise<Message> {
+    return this.repository.create(senderId, recipientId, text);
   }
 }

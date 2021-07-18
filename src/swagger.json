@@ -71,6 +71,70 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": ["Messages"],
+        "summary": "Send a message",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "recipientId": {
+                    "$ref": "#/components/schemas/UserId",
+                    "example": 2
+                  },
+                  "text": {
+                    "type": "string",
+                    "example": "Hello, World!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of messages sent to the recipient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/messages/{senderId}": {
@@ -84,7 +148,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "$ref": "#/components/parameters/userId"
+              "$ref": "#/components/schemas/UserId"
             }
           },
           {
@@ -179,6 +243,11 @@
             "type": "string"
           }
         }
+      },
+      "UserId": {
+        "type": "integer",
+        "format": "int32",
+        "example": 1
       }
     },
     "parameters": {
@@ -188,8 +257,7 @@
         "description": "The User ID for the recipient of the requested message set.",
         "required": true,
         "schema": {
-          "type": "integer",
-          "format": "int32"
+          "$ref": "#/components/schemas/UserId"
         }
       },
       "limit": {
@@ -199,7 +267,9 @@
         "required": false,
         "schema": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "default": 100,
+          "example": 100
         }
       },
       "daysElapsed": {
@@ -209,7 +279,8 @@
         "required": false,
         "schema": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "example": 30
         }
       }
     }

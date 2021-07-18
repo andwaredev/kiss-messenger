@@ -17,8 +17,12 @@ describe('Messages Controller', () => {
   });
 
   const findSpy = sandbox.spy((_?: FindManyOptions<Message>): Promise<Message[]> => Promise.resolve([]));
+  const createSpy = sandbox.spy(
+    (senderId: number, recipientId: number, text: string): Promise<Message> => Promise.resolve(new Message())
+  );
   const mockRepository: MessagesRepository = {
     find: findSpy,
+    create: createSpy,
   };
   const messagesController = new MessagesController(mockRepository);
 
@@ -27,31 +31,13 @@ describe('Messages Controller', () => {
       findSpy.resetHistory();
     });
 
-    const baseExpectedQueryOpts: FindManyOptions<Message> = {
-      where: {},
-      order: { dateSent: 'DESC' },
-      join: { alias: 'message' },
-      take: 100,
-    };
-
-    const senderJoin = {
-      alias: 'message',
-      leftJoinAndSelect: {
-        sender: 'message.sender',
-      },
-    };
-
     it('should return most recent 100 messages for provided recipient', () => {
       messagesController.getMessages({ recipient: MOCK_RECIPIENT_ID });
       assert.isTrue(findSpy.calledOnce);
       const [queryOptions] = findSpy.getCall(0).args;
-      assert.deepEqual(queryOptions, {
-        ...baseExpectedQueryOpts,
-        where: {
-          recipient: MOCK_RECIPIENT_ID,
-        },
-        join: senderJoin,
-      });
+      assert.equal((queryOptions?.where as FindConditions<Message>).recipientId as number, MOCK_RECIPIENT_ID);
+      assert.equal(queryOptions?.take, 100);
+      assert.deepEqual(queryOptions?.order, { dateSent: 'DESC' });
     });
 
     it('should return most recent X messages for provided limit and recipient', () => {
@@ -62,14 +48,9 @@ describe('Messages Controller', () => {
       });
       assert.isTrue(findSpy.calledOnce);
       const [queryOptions] = findSpy.getCall(0).args;
-      assert.deepEqual(queryOptions, {
-        ...baseExpectedQueryOpts,
-        where: {
-          recipient: MOCK_RECIPIENT_ID,
-        },
-        join: senderJoin,
-        take: limit,
-      });
+      assert.equal((queryOptions?.where as FindConditions<Message>).recipientId as number, MOCK_RECIPIENT_ID);
+      assert.equal(queryOptions?.take, limit);
+      assert.deepEqual(queryOptions?.order, { dateSent: 'DESC' });
     });
 
     it('should return messages for past X days messages for provided daysElapsed and recipient', () => {
@@ -80,26 +61,22 @@ describe('Messages Controller', () => {
       });
       assert.isTrue(findSpy.calledOnce);
       const [queryOptions] = findSpy.getCall(0).args;
-      assert.equal((queryOptions?.where as FindConditions<Message>).recipient as number, MOCK_RECIPIENT_ID);
+      assert.equal((queryOptions?.where as FindConditions<Message>).recipientId as number, MOCK_RECIPIENT_ID);
+      assert.deepEqual(queryOptions?.order, { dateSent: 'DESC' });
       assert.deepEqual(
         (queryOptions?.where as FindConditions<Message>).dateSent,
         MoreThanDate(startOfDay(addDays(new Date(), -1 * daysElapsed)))
       );
-      assert.deepEqual(queryOptions?.order, baseExpectedQueryOpts.order);
-      assert.deepEqual(queryOptions?.join, senderJoin);
     });
 
     it('should return most recent 100 messages for provided recipient and sender', () => {
       messagesController.getMessages({ recipient: MOCK_RECIPIENT_ID, sender: MOCK_SENDER_ID });
       assert.isTrue(findSpy.calledOnce);
       const [queryOptions] = findSpy.getCall(0).args;
-      assert.deepEqual(queryOptions, {
-        ...baseExpectedQueryOpts,
-        where: {
-          recipient: MOCK_RECIPIENT_ID,
-          sender: MOCK_SENDER_ID,
-        },
-      });
+      assert.equal((queryOptions?.where as FindConditions<Message>).recipientId as number, MOCK_RECIPIENT_ID);
+      assert.equal((queryOptions?.where as FindConditions<Message>).senderId as number, MOCK_SENDER_ID);
+      assert.equal(queryOptions?.take, 100);
+      assert.deepEqual(queryOptions?.order, { dateSent: 'DESC' });
     });
 
     it('should return most recent X messages for provided limit, recipient, and sender', () => {
@@ -111,14 +88,10 @@ describe('Messages Controller', () => {
       });
       assert.isTrue(findSpy.calledOnce);
       const [queryOptions] = findSpy.getCall(0).args;
-      assert.deepEqual(queryOptions, {
-        ...baseExpectedQueryOpts,
-        where: {
-          recipient: MOCK_RECIPIENT_ID,
-          sender: MOCK_SENDER_ID,
-        },
-        take: limit,
-      });
+      assert.equal((queryOptions?.where as FindConditions<Message>).recipientId as number, MOCK_RECIPIENT_ID);
+      assert.equal((queryOptions?.where as FindConditions<Message>).senderId as number, MOCK_SENDER_ID);
+      assert.equal(queryOptions?.take, limit);
+      assert.deepEqual(queryOptions?.order, { dateSent: 'DESC' });
     });
 
     it('should return messages for past X days messages for provided daysElapsed, recipient, and sender', () => {
@@ -130,13 +103,26 @@ describe('Messages Controller', () => {
       });
       assert.isTrue(findSpy.calledOnce);
       const [queryOptions] = findSpy.getCall(0).args;
-      assert.equal((queryOptions?.where as FindConditions<Message>).recipient as number, MOCK_RECIPIENT_ID);
-      assert.equal((queryOptions?.where as FindConditions<Message>).sender as number, MOCK_SENDER_ID);
+      assert.equal((queryOptions?.where as FindConditions<Message>).recipientId as number, MOCK_RECIPIENT_ID);
+      assert.equal((queryOptions?.where as FindConditions<Message>).senderId as number, MOCK_SENDER_ID);
+      assert.deepEqual(queryOptions?.order, { dateSent: 'DESC' });
       assert.deepEqual(
         (queryOptions?.where as FindConditions<Message>).dateSent,
         MoreThanDate(startOfDay(addDays(new Date(), -1 * daysElapsed)))
       );
-      assert.deepEqual(queryOptions?.order, baseExpectedQueryOpts.order);
+    });
+  });
+
+  describe('createMessage', () => {
+    afterEach(() => {
+      createSpy.resetHistory();
+    });
+
+    it('should call repository.create method', () => {
+      const text = 'foobar';
+      messagesController.createMessage(MOCK_SENDER_ID, MOCK_RECIPIENT_ID, text);
+      assert.isTrue(createSpy.calledOnce);
+      assert.isTrue(createSpy.calledWithExactly(MOCK_SENDER_ID, MOCK_RECIPIENT_ID, text));
     });
   });
 });
