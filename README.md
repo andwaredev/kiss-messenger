@@ -38,7 +38,7 @@ When the server is running, you should see a `console` message notifying with th
 
 ## API Documentation
 
-This project uses the [Open Api Specification](https://swagger.io/specification/) and [Swagger UI](https://swagger.io/tools/swagger-ui/) to provide clear API documentation and allow for easily interacting with the API itself.
+This project uses the [OpenAPI Specification](https://swagger.io/specification/) and [Swagger UI](https://swagger.io/tools/swagger-ui/) to provide clear API documentation and allow for easily interacting with the API itself.
 
 To view the documentation and use Swagger UI, you can visit `/swagger-ui` in a browser.
 
