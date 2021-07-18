@@ -1,0 +1,13 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "all": true,
+  "check-coverage": true,
+  "include": [
+    "src/**"
+  ],
+  "exclude": [
+    "src/middleware/index.ts",
+    "src/routes/index.ts",
+    "src/util/error-handlers/index.ts"
+  ]
+}
