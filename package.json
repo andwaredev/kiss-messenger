@@ -10,15 +10,22 @@
     "test:watch": "yarn test --watch --watch-files src, test/**/*.test.ts",
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "lint:eslint": "eslint './**/*.ts'",
-    "lint:prettier": "prettier --check './**/*.ts'"
+    "lint:prettier": "prettier --check './**/*.ts'",
+    "db:migrate": "yarn db:migrate:run",
+    "db:migrate:gen": "ts-node ./node_modules/.bin/typeorm migration:generate",
+    "db:migrate:run": "ts-node ./node_modules/.bin/typeorm migration:run"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "http-errors": "^1.8.0",
+    "reflect-metadata": "^0.1.13",
     "sinon": "^11.1.1",
-    "swagger-ui-express": "^4.1.6"
+    "sqlite3": "^5.0.2",
+    "swagger-ui-express": "^4.1.6",
+    "txtgen": "^2.2.8",
+    "typeorm": "^0.2.34"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
