@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import createError from 'http-errors';
 
-const USER_ID_HEADER = 'X-User-Id';
+export const USER_ID_HEADER = 'X-User-Id';
 
 // replace this with JWT impl in future
 const naiveAuthMiddleware: RequestHandler = (req, res, next) => {
