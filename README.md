@@ -36,6 +36,16 @@ yarn start
 
 When the server is running, you should see a `console` message notifying with the open port number.
 
+## API Documentation
+
+This project uses the [Open Api Specification](https://swagger.io/specification/) and [Swagger UI](https://swagger.io/tools/swagger-ui/) to provide clear API documentation and allow for easily interacting with the API itself.
+
+To view the documentation and use Swagger UI, you can visit `/swagger-ui` in a browser.
+
+When running the API server locally, this will be available at http://localhost:8080/swagger-ui.
+
+If you'd prefer to view the Swagger Doc itself, you can find that at `src/swagger.json`.
+
 ## Development
 
 This project uses [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) to enforce code style and format standards.

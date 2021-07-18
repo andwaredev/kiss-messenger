@@ -1,6 +1,11 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import { auth as authMiddleware } from './middleware';
+import routes from './routes';
+import swaggerDoc from './swagger.json';
+import { catchAll as generalErrHandler, notFound as notFoundErrHandler } from './util/error-handlers';
 
 dotenv.config();
 
@@ -14,10 +19,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('*', (req, res, next) => {
-  res.send('Hello World');
-  res.end();
-});
+app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
+// Middleware responsible for parsing user from request
+app.use(authMiddleware);
+
+// Bind all API routes
+app.use('/api', routes);
+
+// Init error handlers
+app.use(notFoundErrHandler);
+app.use(generalErrHandler);
 
 app.listen(port, () => {
   console.log(`Server started on port: ${port}.`);
