@@ -28,7 +28,21 @@ Though this project was built with [yarn](https://yarnpkg.com/), you are more th
 
 For the sake of consistency, this documentation will continue to use yarn commands, but generally, you can substitue `yarn X` with `npm run X`. Your mileage may vary!
 
+### Database Setup
+
+For the sake of simplicity, this project uses a simple in-memory [SQLite](https://www.sqlite.org/index.html) database.
+
+_The beauty of this database is that you don't need to install anything beyond the [sqlite3](https://www.npmjs.com/package/sqlite3) package which you should have already along with all dependencies._
+
+You can create and seed this database with some dummy data by invoking the following:
+
+```bash
+yarn db:migrate
+```
+
 ### Running the API
+
+Now you're ready to actually run this thing!
 
 To start up the API server locally, run the following:
 
@@ -82,6 +96,20 @@ You can run the test suite in "watch" mode with:
 ```bash
 yarn test:watch
 ```
+
+### Database Migrations
+
+This project uses [TypeORM](https://typeorm.io) and [SQLite](https://www.sqlite.org/index.html).
+
+To add or modify existing data models, check out the `src/data/entities` directory. Here, you can modify an existing [Entity](https://typeorm.io/#/entities) or create a new one.
+
+When you're done, you'll want to create a new migration file to capture your changes. You can do this with:
+
+```bash
+yarn db:migrate:gen -n "desired-name-of-new-migr-file"
+```
+
+From here, run `yarn db:migrate` to execute the migration, and you should be on your way.
 
 #### Coverage Reports
 
