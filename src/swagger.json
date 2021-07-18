@@ -24,15 +24,82 @@
     "/messages": {
       "get": {
         "tags": ["Messages"],
-        "summary": "Retrieve all messages for the requested recipien",
+        "summary": "Retrieve all messages sent to the recipient",
         "parameters": [
           {
             "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/daysElapsed"
           }
         ],
         "responses": {
           "200": {
-            "description": "List of messages sent to the given reicipient",
+            "description": "List of messages sent to the recipient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{senderId}": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Retrieve all messages sent from the requested sender to recipient",
+        "parameters": [
+          {
+            "name": "senderId",
+            "description": "The User ID for the sender of the requested message set.",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/parameters/userId"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/daysElapsed"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of messages sent from the given sender to the reicipient",
             "content": {
               "application/json": {
                 "schema": {
@@ -79,8 +146,10 @@
             "format": "int32",
             "example": 1
           },
-          "metadata": {
-            "$ref": "#/components/schemas/MessageMetadata"
+          "dateSent": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-07-17T23:20:50.52Z"
           },
           "text": {
             "type": "string",
@@ -95,17 +164,6 @@
             "type": "integer",
             "format": "int32",
             "example": 2
-          }
-        }
-      },
-      "MessageMetadata": {
-        "type": "object",
-        "required": ["dateSent"],
-        "properties": {
-          "dateSent": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2021-07-17T23:20:50.52Z"
           }
         }
       },
@@ -129,6 +187,26 @@
         "in": "header",
         "description": "The User ID for the recipient of the requested message set.",
         "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "limit the response list to this many items",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "daysElapsed": {
+        "name": "daysElapsed",
+        "in": "query",
+        "description": "limit the response list to items in the past n days",
+        "required": false,
         "schema": {
           "type": "integer",
           "format": "int32"
