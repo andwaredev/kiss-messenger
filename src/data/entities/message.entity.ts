@@ -7,7 +7,7 @@ export class Message extends BaseEntity {
   @Column()
   text: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'datetime' })
   dateSent: Date;
 
   @ManyToOne(() => User)
