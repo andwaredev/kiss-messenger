@@ -16,10 +16,13 @@ router.use('/*', (_req, res, next) => {
   return next();
 });
 
+const getAuthedUserId = (res: Response): number => {
+  return res.locals.user.id;
+};
+
 const retrieveQueryOpts = (req: Request, res: Response): MessageFilterOptions => {
-  const { id: recipientId } = res.locals.user;
   const opts: MessageFilterOptions = {
-    recipient: recipientId,
+    recipient: getAuthedUserId(res),
   };
 
   const { limit, daysElapsed } = req.query || {};
@@ -37,7 +40,7 @@ const retrieveQueryOpts = (req: Request, res: Response): MessageFilterOptions =>
 
 router.get('/', async (req, res) => {
   const messages = await messagesController.getMessages(retrieveQueryOpts(req, res));
-  res.json(messages);
+  return res.json(messages);
 });
 
 router.get('/:sender', async (req, res, next) => {
@@ -46,7 +49,21 @@ router.get('/:sender', async (req, res, next) => {
     return next(createError(400));
   }
   const messages = await messagesController.getMessages({ ...retrieveQueryOpts(req, res), sender });
-  res.json(messages);
+  return res.json(messages);
+});
+
+router.post('/', async (req, res, next) => {
+  const senderId = getAuthedUserId(res);
+  const { recipientId, text } = req.body;
+  const parsedRecipientId = parseInt(recipientId, 10);
+  if (Number.isNaN(parsedRecipientId)) {
+    return next(createError(400));
+  }
+  if (recipientId === senderId) {
+    return next(createError(400, 'Cannot send message to oneself.'));
+  }
+  const message = await messagesController.createMessage(senderId, parsedRecipientId, text);
+  return res.json(message);
 });
 
 export default router;

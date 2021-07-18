@@ -17,15 +17,15 @@ const MESSAGE_COUNT = users.length * 300; // roughly 300 messages per user
 export default Array(MESSAGE_COUNT)
   .fill(null)
   .map((_, i) => {
-    const sender = Math.ceil(Math.random() * users.length);
-    const validRecipients = [...Array(users.length).keys()].map((i) => i + 1).filter((id) => sender !== id);
-    const recipient = validRecipients[Math.floor(Math.random() * validRecipients.length)];
+    const senderId = Math.ceil(Math.random() * users.length);
+    const validRecipients = [...Array(users.length).keys()].map((i) => i + 1).filter((id) => senderId !== id);
+    const recipientId = validRecipients[Math.floor(Math.random() * validRecipients.length)];
     const dateSent = getRandomDate();
     return {
       id: i + 1,
       text: sentence(),
       dateSent,
-      sender,
-      recipient,
+      senderId,
+      recipientId,
     } as unknown as Message;
   });
