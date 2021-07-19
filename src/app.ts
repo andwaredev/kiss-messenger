@@ -6,12 +6,7 @@ import routes from './routes';
 import swaggerDoc from './swagger.json';
 import { catchAll as generalErrHandler, notFound as notFoundErrHandler } from './util/error-handlers';
 
-export const startServer = () => {
-  let port = 8080;
-  if (process.env.PORT) {
-    port = parseInt(process.env.PORT, 10);
-  }
-
+export const createApp = () => {
   const app = express();
 
   app.use(cors());
@@ -29,7 +24,16 @@ export const startServer = () => {
   app.use(notFoundErrHandler);
   app.use(generalErrHandler);
 
-  app.listen(port, () => {
+  return app;
+};
+
+export const startServer = () => {
+  let port = 8080;
+  if (process.env.PORT) {
+    port = parseInt(process.env.PORT, 10);
+  }
+
+  createApp().listen(port, () => {
     console.log(`Server started on port: ${port}.`);
   });
 };

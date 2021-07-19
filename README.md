@@ -1,12 +1,14 @@
-# kiss-messenger
+# 💋 kiss-messenger
 
 Keep It Simple, Stupid Messenger
 
 ## Getting Started
 
-**TODO: Node.js installation instructions**
+#### Node.js
 
-First things first, we'll get started by installing all necessary dependencies.
+This project was build using [Node.js](https://nodejs.org/en/) (among other things). If you don't yet have Node.js installed on your machine, you can find and install the Latest LTS version [here](https://nodejs.org/en/download/).
+
+Once you've installed Node.js, we'll get started by installing all necessary dependencies.
 
 You can do this running the following command from the root directory of this project:
 
@@ -24,7 +26,7 @@ yarn
 
 #### Using NPM
 
-Though this project was built with [yarn](https://yarnpkg.com/), you are more than welcome to use [npm](https://www.npmjs.com/), if you'd prefer!.
+Though this project was built with [yarn](https://yarnpkg.com/), you are more than welcome to use [npm](https://docs.npmjs.com/about-npm), if you'd prefer!.
 
 For the sake of consistency, this documentation will continue to use yarn commands, but generally, you can substitue `yarn X` with `npm run X`. Your mileage may vary!
 
@@ -88,13 +90,37 @@ The source code has been unit tested using [mocha](https://mochajs.org/) and [ch
 You can run the unit tests with:
 
 ```bash
-yarn test
+yarn test:unit
 ```
 
 You can run the test suite in "watch" mode with:
 
 ```bash
-yarn test:watch
+yarn test:unit:watch
+```
+
+#### Integration Tests
+
+High-level HTTP integration tests are written with [SuperTest](https://www.npmjs.com/package/supertest).
+
+These tests live inside the `test/integration` directory.
+
+You can invoke the integration tests alone with:
+
+```bash
+yarn test:integration
+```
+
+You can run the integration tests in "watch" mode with:
+
+```bash
+yarn test:unit:watch
+```
+
+Finally, you can run both the unit and integration tests with:
+
+```bash
+yarn test
 ```
 
 ### Database Migrations
@@ -137,7 +163,7 @@ Below, you'll find a collection of resources for digging deeper into different a
 
 ### Tech
 
-This project was built using [Node.js](https://nodejs.org/en/) and [Typescript](https://www.typescriptlang.org/), amongst other things. This list aims to capture major tools used in this project, and provide some resource(s) for learning more.
+This project was built using [Node.js](https://nodejs.org/en/) and [Typescript](https://www.typescriptlang.org/), among other things. This list aims to capture major tools used in this project, and provide some resource(s) for learning more.
 
 - [Express](https://expressjs.com/)
   - Node.js minimalist web framework
