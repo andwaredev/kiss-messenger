@@ -6,7 +6,7 @@ Keep It Simple, Stupid Messenger
 
 #### Node.js
 
-This project was build using [Node.js](https://nodejs.org/en/) (among other things). If you don't yet have Node.js installed on your machine, you can find and install the Latest LTS version [here](https://nodejs.org/en/download/).
+This project was built using [Node.js](https://nodejs.org/en/) (among other things). If you don't yet have Node.js installed on your machine, you can find and install the Latest LTS version [here](https://nodejs.org/en/download/).
 
 Once you've installed Node.js, we'll get started by installing all necessary dependencies.
 
@@ -28,7 +28,7 @@ yarn
 
 Though this project was built with [yarn](https://yarnpkg.com/), you are more than welcome to use [npm](https://docs.npmjs.com/about-npm), if you'd prefer!.
 
-For the sake of consistency, this documentation will continue to use yarn commands, but generally, you can substitue `yarn X` with `npm run X`. Your mileage may vary!
+For the sake of consistency, this documentation will continue to use yarn commands, but generally, you can substitute `yarn X` with `npm run X`. Your mileage may vary!
 
 ### Database Setup
 
@@ -114,7 +114,7 @@ yarn test:integration
 You can run the integration tests in "watch" mode with:
 
 ```bash
-yarn test:unit:watch
+yarn test:integration:watch
 ```
 
 Finally, you can run both the unit and integration tests with:
