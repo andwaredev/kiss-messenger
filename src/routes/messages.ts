@@ -27,11 +27,13 @@ const retrieveQueryOpts = (req: Request, res: Response): MessageFilterOptions =>
 
   const { limit, daysElapsed } = req.query || {};
   const parsedLimit = parseInt(limit as string, 10);
+  // only use limit query opt if valid
   if (!Number.isNaN(parsedLimit)) {
     opts.limit = parsedLimit;
   }
 
   const parsedDaysElapsed = parseInt(daysElapsed as string, 10);
+  // only use daysElapsed query opt if valid
   if (!Number.isNaN(parsedDaysElapsed)) {
     opts.daysElapsed = parsedDaysElapsed;
   }

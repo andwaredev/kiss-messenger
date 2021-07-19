@@ -18,7 +18,7 @@ describe('Messages Controller', () => {
 
   const findSpy = sandbox.spy((_?: FindManyOptions<Message>): Promise<Message[]> => Promise.resolve([]));
   const createSpy = sandbox.spy(
-    (senderId: number, recipientId: number, text: string): Promise<Message> => Promise.resolve(new Message())
+    (_senderId: number, _recipientId: number, _text: string): Promise<Message> => Promise.resolve(new Message())
   );
   const mockRepository: MessagesRepository = {
     find: findSpy,

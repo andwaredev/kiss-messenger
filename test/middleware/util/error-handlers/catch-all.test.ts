@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import createError from 'http-errors';
 import sinon from 'sinon';
 import generalErrHandler from '../../../../src/util/error-handlers/catch-all';
-import { createMockReq, createMockRes } from '../../../util/express';
+import { createMockReq, createMockRes } from '../../../test-util/express';
 import { assertErrResponse } from './util';
 
 describe('Authentication Middleware', () => {

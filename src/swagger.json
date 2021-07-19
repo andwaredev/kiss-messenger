@@ -268,8 +268,7 @@
         "schema": {
           "type": "integer",
           "format": "int32",
-          "default": 100,
-          "example": 100
+          "default": 100
         }
       },
       "daysElapsed": {

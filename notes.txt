@@ -1,0 +1,31 @@
+Guild Take Home Project
+
+- Need to distinguish one user from another
+- Need to be able to tie one piece of text (message) to two users (sender & receiver)
+- Need to be able to recall messages for a given recipient/sender pair
+- No need to impl auth, but I think it should be fairly reasonable to sub in real auth in the future.
+- API documentation -> Swagger?
+- Testing -> unit tests, e2e?
+
+* Creativity
+* Clarity
+* Design Decisions
+* Understanding the challenges of the problem
+* Being able to extrapolate further
+
+Stretch Goals
+- pagination
+- pubsub / notifications
+
+Tech
+- Node.js
+- TypeScript
+- TypeORM
+- SQLite (?)
+- Swagger / OAS (generator) ?
+- Mocha / chai (?)
+- e2e testing framework?
+- Draw.io diagrams?
+
+Questions
+- Why yarn?

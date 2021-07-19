@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import createError from 'http-errors';
 import notFoundErrHandler from '../../../../src/util/error-handlers/not-found';
-import { createMockReq, createMockRes } from '../../../util/express';
+import { createMockReq, createMockRes } from '../../../test-util/express';
 import { assertErrResponse } from './util';
 
 describe('Authentication Middleware', () => {

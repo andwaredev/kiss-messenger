@@ -12,7 +12,7 @@ export interface MessageFilterOptions {
 }
 
 export default class MessagesController {
-  private readonly repository: MessagesRepository;
+  private repository: MessagesRepository;
 
   constructor(repository: MessagesRepository) {
     this.repository = repository;
@@ -35,6 +35,7 @@ export default class MessagesController {
     if (typeof sender === 'number') {
       where.senderId = sender;
     } else {
+      // only show sender user info with message if list is not already filtered by a single sender
       join.leftJoinAndSelect = {
         sender: 'message.sender',
       };
@@ -50,6 +51,7 @@ export default class MessagesController {
       queryOpts.take = limit;
     }
 
+    // exclude foreign keys from response items
     queryOpts.select = ['id', 'text', 'dateSent'];
 
     return this.repository.find(queryOpts);

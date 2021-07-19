@@ -22,11 +22,11 @@ Or simply:
 yarn
 ```
 
-**New to [yarn](https://yarnpkg.com/)? Check out their [getting started guide](https://yarnpkg.com/getting-started).**
+**New to [yarn](https://classic.yarnpkg.com/lang/en/)? Check out their [getting started guide](https://classic.yarnpkg.com/en/docs/getting-started).**
 
 #### Using NPM
 
-Though this project was built with [yarn](https://yarnpkg.com/), you are more than welcome to use [npm](https://docs.npmjs.com/about-npm), if you'd prefer!.
+Though this project was built with [yarn](https://classic.yarnpkg.com/lang/en/) (v1.x), you are more than welcome to use [npm](https://docs.npmjs.com/about-npm), if you'd prefer!.
 
 For the sake of consistency, this documentation will continue to use yarn commands, but generally, you can substitute `yarn X` with `npm run X`. Your mileage may vary!
 

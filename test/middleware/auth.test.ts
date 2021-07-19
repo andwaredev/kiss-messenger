@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import { HttpError } from 'http-errors';
 import sinon, { SinonSpy } from 'sinon';
 import authMiddleware, { USER_ID_HEADER } from '../../src/middleware/auth';
-import { createMockReq, createMockRes, unsetResLocals } from '../util/express';
+import { createMockReq, createMockRes, unsetResLocals } from '../test-util/express';
 
 describe('Authentication Middleware', () => {
   afterEach(() => {

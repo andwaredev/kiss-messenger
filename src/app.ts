@@ -9,9 +9,13 @@ import { catchAll as generalErrHandler, notFound as notFoundErrHandler } from '.
 export const createApp = () => {
   const app = express();
 
+  // Allow all origins
   app.use(cors());
+
+  // Support application/json parsing
   app.use(express.json());
 
+  // Init Swagger UI and serve
   app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
   // Middleware responsible for parsing user from request
