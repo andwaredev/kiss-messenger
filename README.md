@@ -172,3 +172,9 @@ This project was built using [Node.js](https://nodejs.org/en/) and [Typescript](
     - [CORS](https://www.npmjs.com/package/cors)
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - Much more...
+
+### Future Improvement
+
+If only I had more time...
+
+I've captured a few future enhancements and things I would have liked to get to in the [Issues](https://github.com/andwaredev/kiss-messenger/issues) of this GitHub repo.
